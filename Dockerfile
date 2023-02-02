@@ -11,8 +11,8 @@ WORKDIR /app
 COPY --from=builder /app/main .
 COPY .env .
 COPY application_default_credentials.json .
-COPY wait-for.sh .
-RUN ["chmod", "+x", "/app/wait-for.sh"]
+#COPY wait-for.sh .
+#RUN ["chmod", "+x", "/app/wait-for.sh"]
 
 EXPOSE 8080
 CMD [ "/app/main" ]
