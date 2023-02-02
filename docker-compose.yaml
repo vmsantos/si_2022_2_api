@@ -8,19 +8,19 @@ services:
     env_file:
       - .env
     command: sh -c '/app/wait-for.sh db:3306 -t 120 -- /app/main'
-    depends_on:
-      - db
-
-  db:
-    image: mysql:5.7
-    restart: always
-    env_file:
-      - .env
-    ports:
-      - "3306:3306"
-    volumes:
-      - my-db:/var/lib/mysql
-      - ./init:/docker-entrypoint-initdb.d/
-
-volumes:
-  my-db:
+ #   depends_on:
+ #     - db
+ #
+ # db:
+ #   image: mysql:5.7
+ #   restart: always
+ #   env_file:
+ #     - .env
+ #   ports:
+ #     - "3306:3306"
+ #   volumes:
+ #     - my-db:/var/lib/mysql
+ #     - ./init:/docker-entrypoint-initdb.d/
+#
+#volumes:
+#  my-db:
