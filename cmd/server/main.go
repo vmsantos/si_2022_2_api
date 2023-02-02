@@ -84,7 +84,7 @@ func MysqlConnectString() string {
 		User:                 configs.MysqlUser,     // Username
 		Passwd:               configs.MysqlPassword, // Password (requires User)
 		Net:                  "tcp",                 // Network type
-		Addr:                 configs.DBHost,        // Network address (requires Net)
+		Addr:                 configs.DBHost + ":" + configs.DBPort,         // Network address (requires Net)
 		DBName:               configs.MysqlDatabase, // Database name
 		Collation:            "utf8mb4_general_ci",  // Connection collation
 		AllowNativePasswords: true,
