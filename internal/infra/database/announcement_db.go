@@ -73,7 +73,7 @@ func (a *Announcement) GetAllAnnouncements() (*[]dto.GetAllAnnouncementsOutputTo
 
 func (a *Announcement) GetAnnouncementById(id string) (*dto.GetAllAnnouncementsOutputToUser, error) {
 
-	query := " select a.id, a.name,  a.category,  a.description,  a.address,  a.postal_code,  u.name,  group_concat(image_url) as \"images\"\nfrom\n  users u,\n  announcement a,\n  announcement_images\nWHERE\n  a.user_id = u.id\n  AND a.id = announcement_images.announcement_id\n  AND a.id = ?  \n  GROUP BY\n  a.id,\n  a.name,  \n  a.description,\n  a.address,\n  a.postal_code,\n  u.name;"
+	query := " select a.id, a.name,  a.category,  a.description,  a.address,  a.postal_code,  u.name,  group_concat(image_url) as \"images\"\n from users u inner join announcement a on  a.user_id = u.id left join announcement_images aim on a.id = aim.announcement_id WHERE  a.id = ? \n  GROUP BY\n  a.id,\n  a.name,  \n  a.description,\n  a.address,\n  a.postal_code,\n  u.name;"
 
 	var announcementsOutput dto.GetAllAnnouncementsOutput
 	if err := a.DB.QueryRow(query, id).Scan(&announcementsOutput.ID, &announcementsOutput.Name, &announcementsOutput.Category, &announcementsOutput.Description, &announcementsOutput.Address, &announcementsOutput.PostalCode, &announcementsOutput.User, &announcementsOutput.Images); err != nil {
