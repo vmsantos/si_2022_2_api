@@ -41,7 +41,7 @@ func (a *Announcement) Create(announcement *entity.Announcement) error {
 func (a *Announcement) GetAllAnnouncements() (*[]dto.GetAllAnnouncementsOutputToUser, error) {
 	//var announcementsOutputs []dto.GetAllAnnouncementsOutput
 	var announcementOutputsUsers []dto.GetAllAnnouncementsOutputToUser
-	rows, err := a.DB.Query(" select a.id,  a.name, a.category, a.description,  a.address,  a.postal_code,  u.name,  group_concat(image_url) as \"images\" from  users u, announcement a,  announcement_images WHERE  a.user_id = u.id  AND a.id = announcement_images.announcement_id  GROUP BY a.id, a.name, a.category, a.description,a.address,a.postal_code,  u.name;")
+	rows, err := a.DB.Query(" select a.id,  a.name, a.category, a.description,  a.address,  a.postal_code,  u.name,  group_concat(image_url) as \"images\" from  users u inner join announcement a on  a.user_id = u.id left join announcement_images aim on a.id = aim.announcement_id GROUP BY a.id, a.name, a.category, a.description,a.address,a.postal_code,  u.name;")
 	if err != nil {
 		log.Printf("Error executing query: %s", err)
 		return nil, err
